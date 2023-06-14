@@ -37,13 +37,13 @@
     <table class="min-w-full bg-white border border-gray-300">
       <thead>
         <tr>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left">Client</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left">Project</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left">Start Date</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-center">Revenue</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left">Status</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left">Completion</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left">Margin</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('client')">Client</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('project')">Project</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('startDate')">Start Date</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-center cursor-pointer" @click="sortTable('revenue')">Revenue</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer">Status</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer">Completion</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('margin')">Margin</th>
         </tr>
       </thead>
       <tbody>
@@ -175,6 +175,8 @@ export default {
         },
         // Add more items as needed
       ],
+      sortColumn: '',
+      sortDirection: '',
       filters: {
         client: "",
         status: "",
@@ -238,6 +240,30 @@ export default {
       } else if (item.percentCompletion > 100) {
         item.percentCompletion = 100;
       }
+    },
+    sortTable(column) {
+      if (this.sortColumn === column) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortColumn = column;
+        this.sortDirection = 'asc';
+      }
+
+      this.sortState();
+    },
+    sortState() {
+      this.state.sort((a, b) => {
+        const aValue = a[this.sortColumn];
+        const bValue = b[this.sortColumn];
+
+        if (aValue < bValue) {
+          return this.sortDirection === 'asc' ? -1 : 1;
+        } else if (aValue > bValue) {
+          return this.sortDirection === 'asc' ? 1 : -1;
+        } else {
+          return 0;
+        }
+      });
     },
   },
 };
