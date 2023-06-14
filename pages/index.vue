@@ -42,7 +42,7 @@
           <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('startDate')">Start Date</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-center cursor-pointer" @click="sortTable('revenue')">Revenue</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer">Status</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer">Completion</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('percentCompletion')">Completion</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left cursor-pointer" @click="sortTable('margin')">Margin</th>
         </tr>
       </thead>
@@ -233,6 +233,7 @@ export default {
       } else if (status === "Cancelled" || status === "Not Started") {
         item.percentCompletion = 0;
       }
+      this.saveStateToLocalStorage();
     },
     validateCompletion(item) {
       if (item.percentCompletion < 0) {
@@ -240,7 +241,18 @@ export default {
       } else if (item.percentCompletion > 100) {
         item.percentCompletion = 100;
       }
+      this.saveStateToLocalStorage();
     },
+    saveStateToLocalStorage() {
+      localStorage.setItem('state', JSON.stringify(this.state));
+    },
+    loadStateFromLocalStorage() {
+      const savedState = localStorage.getItem('state');
+      if (savedState) {
+        this.state = JSON.parse(savedState);
+      }
+    },
+
     sortTable(column) {
       if (this.sortColumn === column) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -266,6 +278,9 @@ export default {
       });
     },
   },
+  mounted() {
+    this.loadStateFromLocalStorage();
+  }, 
 };
 </script>
 
