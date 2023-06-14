@@ -7,8 +7,7 @@
     <div class="flex justify-between items-center mb-4">
       <div class="ml-2">
         <label for="client-filter" class="mr-2 font-bold text-lg"
-          >Client:</label
-        >
+          >Client:</label>
         <input
           type="text"
           v-model="filters.client"
@@ -133,6 +132,7 @@
 </template>
 
 <script>
+import './style.css'
 export default {
   data() {
     return {
@@ -285,75 +285,6 @@ export default {
 </script>
 
 <style>
-.bg-custom{
-  background-color: #3b82f6;
-  background-size: contain
-}
 
-.table {
-  border-collapse: collapse;
-  width: 100%;
-}
 
-.table th,
-.table td {
-  padding: 12px;
-}
-
-.table th {
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.bg-gray-100 {
-  background-color: #f7fafc;
-}
-
-.bg-red-500 {
-  background-color: #ef4444;
-}
-
-.bg-yellow-500 {
-  background-color: #f59e0b;
-}
-
-.bg-blue-500 {
-  background-color: #3b82f6;
-}
-
-.bg-green-500 {
-  background-color: #10b981;
-}
-
-.text-red-500 {
-  color: #ef4444;
-}
-
-.text-white {
-  color: #ffffff;
-}
-
-.text-gray-900 {
-  color: #111827;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.border-b {
-  border-bottom-width: 1px;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
-body{
-background-image: url('https://www.challenge.ma/wp-content/uploads/2018/07/Mazars-18.jpg');
-background-repeat: no-repeat;
-background-size: cover;
-width: 80%;
-margin: 50px auto;
-}
 </style>
