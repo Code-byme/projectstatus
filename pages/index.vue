@@ -183,6 +183,7 @@ export default {
       },
     };
   },
+  // Filters the state based on the selected client and status
   computed: {
     
     filteredState() {
@@ -196,11 +197,14 @@ export default {
       });
       
     },
+    // Calculates the total revenue
     totalRevenue() {
     return this.filteredState.reduce((total, item) => total + item.revenue, 0);
   }
   },
+  
   methods: {
+     // Returns the CSS class for the completion color based on the percent completion
     getCompletionColorClass(percentCompletion) {
       if (percentCompletion <= 25) {
         return "bg-red-500";
@@ -212,9 +216,11 @@ export default {
         return "bg-green-500";
       }
     },
+    //Returns the inline style for the completion width based on the percent completion
     getCompletionWidthStyle(percentCompletion) {
       return `width: ${percentCompletion}%`;
     },
+    // Returns the CSS class for the margin alert based on the margin value
     getMarginAlertClass(margin) {
       if (margin < 0) {
         return "text-red-500 font-bold";
@@ -222,6 +228,7 @@ export default {
         return "text-gray-700";
       }
     },
+     // Updates the percent completion based on the selected status
     updateCompletionColor(item) {
       const status = item.status;
       if (status === "Completed") {
@@ -235,6 +242,7 @@ export default {
       }
       this.saveStateToLocalStorage();
     },
+    // Validates and updates the percent completion
     validateCompletion(item) {
       if (item.percentCompletion < 0) {
         item.percentCompletion = 0;
@@ -243,15 +251,19 @@ export default {
       }
       this.saveStateToLocalStorage();
     },
+     // Saves the state to localStorage
     saveStateToLocalStorage() {
       localStorage.setItem('state', JSON.stringify(this.state));
     },
+    // Loads the state from localStorage
     loadStateFromLocalStorage() {
       const savedState = localStorage.getItem('state');
       if (savedState) {
         this.state = JSON.parse(savedState);
       }
     },
+
+    // Sorts the table based on the selected column
 
     sortTable(column) {
       if (this.sortColumn === column) {
@@ -263,6 +275,8 @@ export default {
 
       this.sortState();
     },
+
+    // Sorts the state based on the selected column and direction
     sortState() {
       this.state.sort((a, b) => {
         const aValue = a[this.sortColumn];
@@ -278,6 +292,8 @@ export default {
       });
     },
   },
+
+  
   mounted() {
     this.loadStateFromLocalStorage();
   }, 
