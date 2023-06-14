@@ -1,9 +1,9 @@
 <template>
-  <div class="container mx-auto bg-blue-600">
-    <h1 class="text-2xl font-bold mb-4 text-center text-white">
+  <div class="container  mx-auto bg-slate-400">
+    <h1 class="text-2xl font-bold mb-4 text-center">
       Project Status
     </h1>
-
+  
     <div class="flex justify-between items-center mb-4">
       <div class="ml-2">
         <label for="client-filter" class="mr-2 font-bold text-lg"
@@ -40,7 +40,7 @@
           <th class="py-3 px-4 bg-gray-100 border-b text-left">Client</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left">Project</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left">Start Date</th>
-          <th class="py-3 px-4 bg-gray-100 border-b text-right">Revenue</th>
+          <th class="py-3 px-4 bg-gray-100 border-b text-center">Revenue</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left">Status</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left">Completion</th>
           <th class="py-3 px-4 bg-gray-100 border-b text-left">Margin</th>
@@ -51,7 +51,7 @@
           <td class="py-4 px-6 border-b">{{ item.client }}</td>
           <td class="py-4 px-6 border-b">{{ item.project }}</td>
           <td class="py-4 px-6 border-b">{{ item.startDate }}</td>
-          <td class="py-4 px-6 border-b text-right">{{ item.revenue }}</td>
+          <td class="py-4 px-6 border-b text-center">{{ item.revenue }}</td>
           <td class="py-4 px-6 border-b">
             <select
               v-model="item.status"
@@ -116,8 +116,20 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+            <tr>
+              <th class="py-2 px-4"></th>
+              <th class="py-2 px-4"></th>
+              <th class="py-2 px-4"></th>
+              <th class="py-2 px-4">Total: {{ totalRevenue }}</th>
+              <th class="py-2 px-4"></th>
+              <th class="py-2 px-4"></th>
+              <th class="py-2 px-4"></th>
+            </tr>
+          </tfoot>
     </table>
   </div>
+
 </template>
 
 <script>
@@ -129,37 +141,37 @@ export default {
           client: "Client A",
           project: "Project W",
           startDate: "2023-01-01",
-          revenue: "10,000",
+          revenue: 4000,
           status: "Completed",
           percentCompletion: 100,
-          margin: "-500",
+          margin: -500,
         },
         {
           client: "Client B",
           project: "Project X",
           startDate: "2023-20-01",
-          revenue: "10,500",
+          revenue: 8000,
           status: "In Progress",
           percentCompletion: 60,
-          margin: "800",
+          margin: 800,
         },
         {
           client: "Client C",
           project: "Project Y",
           startDate: "2023-06-01",
-          revenue: "8,000",
+          revenue: 3200,
           status: "Cancelled",
           percentCompletion: 0,
-          margin: "500",
+          margin: 500,
         },
         {
           client: "Client D",
           project: "Project Z",
           startDate: "2023-08-01",
-          revenue: "15,000",
+          revenue: 1500,
           status: "On Hold",
           percentCompletion: 25,
-          margin: "600",
+          margin: 600,
         },
         // Add more items as needed
       ],
@@ -182,7 +194,9 @@ export default {
       });
       
     },
-    
+    totalRevenue() {
+    return this.filteredState.reduce((total, item) => total + item.revenue, 0);
+  }
   },
   methods: {
     getCompletionColorClass(percentCompletion) {
@@ -230,6 +244,11 @@ export default {
 </script>
 
 <style>
+.bg-custom{
+  background-color: #3b82f6;
+  background-size: contain
+}
+
 .table {
   border-collapse: collapse;
   width: 100%;
@@ -287,5 +306,13 @@ export default {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+body{
+background-image: url('https://www.challenge.ma/wp-content/uploads/2018/07/Mazars-18.jpg');
+background-repeat: no-repeat;
+background-size: cover;
+width: 80%;
+margin: 50px auto;
 }
 </style>
